@@ -1,0 +1,62 @@
+<div id="iki-romance" style="
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#000;
+  border-top:2px solid #7dd3fc;
+  padding:20px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  z-index:99999;
+">
+</div>
+
+<style>
+.iki-rom-btn {
+  background:#0b1220;
+  color:#7dd3fc;
+  border:1px solid #1f2937;
+  padding:10px 16px;
+  font-size:15px;
+  cursor:pointer;
+  border-radius:6px;
+  transition:all .2s;
+}
+.iki-rom-btn:hover {
+  background:#12263a;
+  color:#a8e8ff;
+  transform:scale(1.05);
+}
+</style>
+<script type="module">
+import { SWITCHES } from "./SETI.js";
+
+const box = document.getElementById("iki-romance");
+
+// Jeder Schalter wird ein romantischer Moment
+SWITCHES.forEach(sw => {
+    const btn = document.createElement("button");
+    btn.className = "iki-rom-btn";
+    btn.textContent = sw.name;
+
+    btn.onclick = () => {
+        const result = sw.run();
+
+        const msg = `${sw.name}\n\n${sw.desc}\n\nÜbernehmen?`;
+        if(result !== false){
+            if(confirm(msg)){
+                console.log("Übernommen:", sw.name);
+            } else {
+                console.log("Weiter suchen…");
+            }
+        } else {
+            console.log("Schalter konnte nicht greifen:", sw.name);
+        }
+    };
+
+    box.appendChild(btn);
+});
+</script>
